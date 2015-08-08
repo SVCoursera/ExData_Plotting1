@@ -18,9 +18,11 @@ library(sqldf)
 
 # load the data using SQLDF to filter the input rows
 PowerData <- read.csv.sql("household_power_consumption.txt", sql = "select * from file where Date='1/2/2007' or Date='2/2/2007'", sep=";" )
+closeAllConnections()
 
-# open the PDF graphics device
-pdf(file="plot1.pdf")
+
+# create the png file
+png(file = "plot1.png") 
 
 # Create the histogram using hist()
 # col sets the plotting colour - in this case, red
@@ -28,6 +30,7 @@ pdf(file="plot1.pdf")
 # xlab sets the horizontal axis label
 # main sets the chart title
 hist(PowerData$Global_active_power, col = "red", xlab="Global Active Power(kilowatts)", ylab="Frequency", main="Global Active Power")
+
 
 # close the graphics device
 dev.off()

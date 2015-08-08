@@ -18,11 +18,12 @@ library(sqldf)
 
 # load the data using SQLDF to filter the input rows
 PowerData <- read.csv.sql("household_power_consumption.txt", sql = "select * from file where Date='1/2/2007' or Date='2/2/2007'", sep=";" )
+closeAllConnections()
 # Create a date-time column by joining the date and time columns and then converting to the right datatype using strptime
 PowerData$DateTime <- strptime(paste(PowerData$Date, " ", PowerData$Time), "%d/%m/%Y %H:%M:%S")
 
-# open the PDF graphics device
-pdf(file="plot3.pdf")
+# create the png file
+png(file = "plot3.png") 
 
 # Create the first plot for sub_metering_1
 # Use type = "l" to create a line
@@ -42,6 +43,7 @@ with(PowerData, lines(DateTime, Sub_metering_3, col="blue"))
 # Legend - another character vector to set the text for each item
 # lty - define the line thickness
 legend("topright", pch=c(NA,NA,NA), col=c("black", "red","blue"), legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), lty=c(1,1,1))
+
 
 # close the graphics device
 dev.off()
